@@ -14,6 +14,7 @@ namespace Core.Entities
 
         public int Id { get; set; }
         public long Size { get; set; }
+        public int Order { get; set; }
 
         public ICollection<Process> Processes { get; set; }
     }
