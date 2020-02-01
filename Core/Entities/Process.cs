@@ -8,6 +8,7 @@ namespace Core.Entities
     {
         public int Id { get; set; }
         public int IdBlock { get; set; }
+        public string Name { get; set; }
         public long Size { get; set; }
         public Block Block { get; set; }
 
