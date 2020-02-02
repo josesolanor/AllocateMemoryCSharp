@@ -8,15 +8,22 @@ namespace Core.Core
 {
     public class FirstFit : IAlgorithms
     {
-        public int AddProcessToBlock(int processSize, List<BlockDTO> blocks)
+        public int AddProcessToBlock(long processSize, List<BlockDTO> blocks)
         {
-            throw new NotImplementedException();
+            foreach (var block in blocks)
+            {
+                if (processSize <= block.UpdatedSize)
+                {
+                    return block.Order;
+                }
+            }
+            return 0;
         }
     }
 
     public class BestFit : IAlgorithms
     {
-        public int AddProcessToBlock(int processSize, List<BlockDTO> blocks)
+        public int AddProcessToBlock(long processSize, List<BlockDTO> blocks)
         {
             throw new NotImplementedException();
         }
@@ -24,7 +31,7 @@ namespace Core.Core
 
     public class WorstFit : IAlgorithms
     {
-        public int AddProcessToBlock(int processSize, List<BlockDTO> blocks)
+        public int AddProcessToBlock(long processSize, List<BlockDTO> blocks)
         {
             throw new NotImplementedException();
         }
@@ -32,9 +39,12 @@ namespace Core.Core
 
     public class NextFit : IAlgorithms
     {
-        public int AddProcessToBlock(int processSize, List<BlockDTO> blocks)
+        public int AddProcessToBlock(long processSize, List<BlockDTO> blocks)
         {
             throw new NotImplementedException();
         }
     }
+
+
+
 }
