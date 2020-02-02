@@ -7,6 +7,6 @@ namespace Core.Interfaces
 {
     public interface IAlgorithms
     {
-        int AddProcessToBlock(int processSize, List<BlockDTO> blocks);
+        int AddProcessToBlock(long processSize, List<BlockDTO> blocks);
     }
 }
