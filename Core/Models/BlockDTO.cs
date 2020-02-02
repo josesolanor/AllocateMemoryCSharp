@@ -16,7 +16,7 @@ namespace Core.Models
                 {
                     ProcessTotalSize += Process.Size;
                 }
-                long UpdatedSizeTotal = Size + ProcessTotalSize;
+                long UpdatedSizeTotal = Size - ProcessTotalSize;
                 return UpdatedSizeTotal;
             }
         }

@@ -26,8 +26,10 @@ namespace Core.Core
 
         public Task<bool> AddProcessByAlgorithm(ProcessDTO processData, string algorithmType)
         {
-            throw new NotImplementedException();
+            
         }
+
+
 
         public async Task<List<BlockDTO>> GetAllMemoryBlocks()
         {

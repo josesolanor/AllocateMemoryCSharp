@@ -1,28 +1,38 @@
 ﻿using Core.Interfaces;
+using Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Core.Core
 {
-    public class Algorithms : IAlgorithms
+    public class FirstFit : IAlgorithms
     {
-        public bool BestFit()
+        public int AddProcessToBlock(int processSize, List<BlockDTO> blocks)
         {
             throw new NotImplementedException();
         }
+    }
 
-        public bool FirstFit()
+    public class BestFit : IAlgorithms
+    {
+        public int AddProcessToBlock(int processSize, List<BlockDTO> blocks)
         {
             throw new NotImplementedException();
         }
+    }
 
-        public bool NextFit()
+    public class WorstFit : IAlgorithms
+    {
+        public int AddProcessToBlock(int processSize, List<BlockDTO> blocks)
         {
             throw new NotImplementedException();
         }
+    }
 
-        public bool WorstFit()
+    public class NextFit : IAlgorithms
+    {
+        public int AddProcessToBlock(int processSize, List<BlockDTO> blocks)
         {
             throw new NotImplementedException();
         }
