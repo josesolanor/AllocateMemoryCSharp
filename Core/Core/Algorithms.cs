@@ -44,7 +44,18 @@ namespace Core.Core
     {
         public int AddProcessToBlock(long processSize, List<BlockDTO> blocks)
         {
-            throw new NotImplementedException();
+            var difference = blocks[0].UpdatedSize - processSize;
+            var order = 0;
+
+            foreach (var block in blocks)
+            {
+                if (block.UpdatedSize - processSize >= difference)
+                {
+                    difference = block.UpdatedSize - processSize;
+                    order = block.Order;
+                }
+            }
+            return order;
         }
     }
 
@@ -52,7 +63,7 @@ namespace Core.Core
     {
         public int AddProcessToBlock(long processSize, List<BlockDTO> blocks)
         {
-            throw new NotImplementedException();
+            
         }
     }
 
