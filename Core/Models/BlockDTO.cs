@@ -6,6 +6,7 @@ namespace Core.Models
 {
     public class BlockDTO
     {
+        public int Id { get; set; }
         public long Size { get; set; }
         public long UpdatedSize
         {

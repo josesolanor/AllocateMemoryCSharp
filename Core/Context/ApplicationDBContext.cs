@@ -18,7 +18,6 @@ namespace Core.Context
         {
             base.OnConfiguring(optionsBuilder);
             optionsBuilder.EnableSensitiveDataLogging();
-
         }
 
         protected override void OnModelCreating(ModelBuilder builder)

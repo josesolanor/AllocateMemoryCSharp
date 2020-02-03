@@ -7,3 +7,151 @@
 <h1>Index</h1>
 
 
+@section Scripts{
+
+    <h1 class="text-center">Allocate Memory Simulator</h1>
+
+    <h5 style="color: red">@TempData["Msg"]</h5>
+    <div class="demo-container">
+        <div id="blockGrid"></div>
+    </div>
+
+    <script>
+
+        $(function () {
+
+            var dataSourceMaster = new DevExpress.data.DataSource({
+                key: "id",
+                load: function(loadOptions) {
+                    var d = $.Deferred(),
+                            params = {};
+                    [
+                        "skip",
+                        "take",
+                        "requireTotalCount",
+                        "requireGroupCount",
+                        "sort",
+                        "filter",
+                        "totalSummary",
+                        "group",
+                        "groupSummary"
+                    ].forEach(function(i) {
+                        if(i in loadOptions && isNotEmpty(loadOptions[i]))
+                            params[i] = JSON.stringify(loadOptions[i]);
+                    });
+                    $.getJSON('@Url.Action("GetBlocks", "Blocks")', params)
+                        .done(function (result) {
+                            console.log(result);
+                            d.resolve(result['data'], {
+                                totalCount: result['totalCount']
+                            });
+                        });
+                    return d.promise();
+                }
+            });
+            function isNotEmpty(value) {
+                return value !== undefined && value !== null && value !== "";
+            }
+
+            $("#blockGrid").dxDataGrid({
+                keyExpr: "id",
+                dataSource: dataSourceMaster,
+                allowColumnReordering: true,
+                allowColumnResizing: true,
+                columnAutoWidth: true,
+                showColumnLines: true,
+                showRowLines: true,
+                rowAlternationEnabled: true,
+                showBorders: true,
+                remoteOperations: {
+                    groupPaging: false,
+                    filtering : false,
+                    paging : false,
+                    sorting : false
+                },
+                columns: [
+                    {
+                        dataField: "id",
+                        visible: false
+                    },
+                    {
+                        dataField: "order",
+                        caption: 'order'
+                    },
+                    {
+                        dataField: "size",
+                        caption: 'Initial Size'
+                    },
+                    {
+                        dataField: "updatedSize",
+                        caption: 'Actual Size'
+                    },
+                ],
+                masterDetail: {
+                    enabled: true,
+                    template: function (container, options) {
+                    var currentData = options.data;
+
+                    $("<div>")
+                        .dxDataGrid({
+                            columnAutoWidth: true,
+                            showBorders: true,
+                            columns: [
+                                {
+                                    dataField: "id",
+                                    visible: false
+                                },
+                                {
+                                    dataField: "blockId",
+                                    visible: false
+                                },
+                                {
+                                    dataField: "name",
+                                    caption: 'Process Name'
+                                },
+                                {
+                                    dataField: "size",
+                                    caption: 'Process Size'
+                                },
+                                {
+                                    dataField: "algorithmType",
+                                    caption: 'Algorithm Type'
+                                },
+                                {
+                                    dataField: "FreeProcess",
+                                    caption: 'Free Process',
+                                    cellTemplate: function (container, options) {
+
+                                        var wrapper = $("<center>");
+                                        var FreeContainer = $("<div>");
+
+                                        container.append(wrapper.append(FreeContainer));
+
+                                        FreeContainer.dxButton({
+                                            hint: 'FreeProcess',
+                                            type: 'danger',
+                                            icon: 'fa fa-trash',
+                                            width: 50,
+                                            onClick: function () {
+                                                var url = "@Url.Action("FreeProcess","Blocks")/" + options.data['blockId'];
+                                                window.location.href = url;
+                                            }
+                                        });
+                                    }
+                                },
+                            ],
+                            dataSource: new DevExpress.data.DataSource({
+                                store: new DevExpress.data.ArrayStore({
+                                    key: "id",
+                                    data: currentData.processes
+                                }),
+                                filter: ["blockId", "=", options.key]
+                            })
+                        }).appendTo(container);
+                    }
+                }
+            });
+        });
+
+    </script>
+}

@@ -52,7 +52,7 @@ namespace Core.Core
             var processEntity = _mapper.Map<Process>(processData);
 
             processEntity.Block = blockSelected;
-            processEntity.IdBlock = blockSelected.Id;
+            processEntity.BlockId = blockSelected.Id;
 
             _context.Processes.Add(processEntity);
             await _context.SaveChangesAsync();

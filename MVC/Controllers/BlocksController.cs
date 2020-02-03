@@ -36,15 +36,14 @@ namespace MVC.Controllers
         [HttpPost]
         public async Task<IActionResult> AddProcess(ProcessDTO process, string algorithm)
         {
-
             var result = await _repository.AddProcessByAlgorithm(process, algorithm);
 
             if (result)
             {
-                TempData["ApiMsg"] = "Added process";
+                TempData["Msg"] = "Added process";
                 return RedirectToAction("Index");
             }
-            TempData["ApiMsg"] = "No space available";
+            TempData["Msg"] = "No space available";
             return RedirectToAction("Index");
         }
 
@@ -55,10 +54,10 @@ namespace MVC.Controllers
 
             if (result)
             {
-                TempData["ApiMsg"] = "Released process";
+                TempData["Msg"] = "Released process";
                 return RedirectToAction("Index");
             }
-            TempData["ApiMsg"] = "Something went very wrong :c";
+            TempData["Msg"] = "Something went very wrong :c";
             return RedirectToAction("Index");
         }
     }
