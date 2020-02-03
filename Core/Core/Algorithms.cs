@@ -2,6 +2,7 @@
 using Core.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Core.Core
@@ -62,8 +63,19 @@ namespace Core.Core
     public class NextFit : IAlgorithms
     {
         public int AddProcessToBlock(long processSize, List<BlockDTO> blocks)
-        {
-            
+        {            
+            foreach (var block in blocks)
+            {
+                if (!block.Processes.Any(x => x.AlgorithmType.Equals(AlgorithmsType.NextFit)))
+                {
+                    if (processSize <= block.UpdatedSize)
+                    {
+                        return block.Order;
+                    }
+                }
+               
+            }
+            return 0;
         }
     }
 

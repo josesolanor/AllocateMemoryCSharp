@@ -10,6 +10,7 @@ namespace Core.Entities
         public int IdBlock { get; set; }
         public string Name { get; set; }
         public long Size { get; set; }
+        public string AlgorithmType { get; set; }
         public Block Block { get; set; }
 
     }

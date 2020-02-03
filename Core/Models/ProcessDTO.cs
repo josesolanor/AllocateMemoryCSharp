@@ -8,6 +8,7 @@ namespace Core.Models
     {
         public string Name { get; set; }
         public long Size { get; set; }
+        public string AlgorithmType { get; set; }
         public BlockDTO Block { get; set; }
     }
 }
