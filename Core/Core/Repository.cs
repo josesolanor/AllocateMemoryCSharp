@@ -58,7 +58,6 @@ namespace Core.Core
             await _context.SaveChangesAsync();
 
             result = true;
-
             return result;
         }
 

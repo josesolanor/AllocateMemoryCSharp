@@ -2,6 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using Core.Core;
+using Core.Entities;
+using Core.Interfaces;
+using Core.Mapper;
+using Core.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -23,6 +29,17 @@ namespace MVC
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            var mappingConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MappingProfile());
+                mc.CreateMap<BlockDTO, Block>();
+                mc.CreateMap<ProcessDTO, Process>();
+
+            });
+
+            IMapper mapper = mappingConfig.CreateMapper();
+            services.AddSingleton(mapper);
+            services.AddScoped<IRepository, Repository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

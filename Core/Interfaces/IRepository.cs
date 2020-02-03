@@ -10,5 +10,6 @@ namespace Core.Interfaces
     {
         Task<List<BlockDTO>> GetAllMemoryBlocks();
         Task<bool> AddProcessByAlgorithm(ProcessDTO processData, string algorithmType);
+        Task<bool> FreeProcess(ProcessDTO processData);
     }
 }

@@ -72,8 +72,7 @@ namespace Core.Core
                     {
                         return block.Order;
                     }
-                }
-               
+                }               
             }
             return 0;
         }
