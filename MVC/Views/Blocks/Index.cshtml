@@ -4,56 +4,58 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h5 style="color: red">@TempData["Msg"]</h5>
+
+<h4>Add new process</h4>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="AddProcess">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label asp-for="Size" class="control-label"></label>
+                    <input asp-for="Size" class="form-control" />
+                    <span asp-validation-for="Size" class="text-danger"></span>
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label asp-for="AlgorithmType" class="control-label"></label>
+                    <select asp-for="AlgorithmType" class="form-control" asp-items="ViewBag.AlgorithmType"></select>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="demo-container">
+    <h4>Memory Block</h4>
+    <hr />
+    <div id="blockGrid"></div>
+</div>
 
 
 @section Scripts{
 
-    <h1 class="text-center">Allocate Memory Simulator</h1>
+<script>
 
-    <h5 style="color: red">@TempData["Msg"]</h5>
-    <div class="demo-container">
-        <div id="blockGrid"></div>
-    </div>
+    $.ajax({
+        url: '@Url.Action("GetBlocks", "Blocks")',
+        type: "GET"
+    }).done(function (response) {
 
-    <script>
+        var dataSourceMaster = response;
 
-        $(function () {
-
-            var dataSourceMaster = new DevExpress.data.DataSource({
-                key: "id",
-                load: function(loadOptions) {
-                    var d = $.Deferred(),
-                            params = {};
-                    [
-                        "skip",
-                        "take",
-                        "requireTotalCount",
-                        "requireGroupCount",
-                        "sort",
-                        "filter",
-                        "totalSummary",
-                        "group",
-                        "groupSummary"
-                    ].forEach(function(i) {
-                        if(i in loadOptions && isNotEmpty(loadOptions[i]))
-                            params[i] = JSON.stringify(loadOptions[i]);
-                    });
-                    $.getJSON('@Url.Action("GetBlocks", "Blocks")', params)
-                        .done(function (result) {
-                            console.log(result);
-                            d.resolve(result['data'], {
-                                totalCount: result['totalCount']
-                            });
-                        });
-                    return d.promise();
-                }
-            });
-            function isNotEmpty(value) {
-                return value !== undefined && value !== null && value !== "";
-            }
-
-            $("#blockGrid").dxDataGrid({
+        $("#blockGrid").dxDataGrid({
                 keyExpr: "id",
                 dataSource: dataSourceMaster,
                 allowColumnReordering: true,
@@ -76,7 +78,7 @@
                     },
                     {
                         dataField: "order",
-                        caption: 'order'
+                        caption: 'Order'
                     },
                     {
                         dataField: "size",
@@ -133,8 +135,16 @@
                                             icon: 'fa fa-trash',
                                             width: 50,
                                             onClick: function () {
-                                                var url = "@Url.Action("FreeProcess","Blocks")/" + options.data['blockId'];
-                                                window.location.href = url;
+                                                var url = "@Url.Action("FreeProcess","Blocks")/" + options.data['id'];
+                                                $.ajax({
+                                                    url: url,
+                                                    type: "POST"
+                                                }).done(function (response) {
+                                                    responseUrl = '@Url.Action("Index", "Blocks")'
+                                                    window.location.href = responseUrl;
+                                                });
+                                                
+                                                
                                             }
                                         });
                                     }
@@ -151,7 +161,6 @@
                     }
                 }
             });
-        });
-
+    });
     </script>
 }

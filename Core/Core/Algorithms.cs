@@ -26,14 +26,14 @@ namespace Core.Core
     {
         public int AddProcessToBlock(long processSize, List<BlockDTO> blocks)
         {
-            var difference = blocks[0].UpdatedSize - processSize;
+            uint difference = (uint)(blocks[0].UpdatedSize - processSize);
             var order = 0;
 
             foreach (var block in blocks)
             {
-                if (block.UpdatedSize - processSize <= difference)
+                if ((block.UpdatedSize - processSize) < difference)
                 {
-                    difference = block.UpdatedSize - processSize;
+                    difference = (uint)(block.UpdatedSize - processSize);
                     order = block.Order;                    
                 }
             }
@@ -45,14 +45,14 @@ namespace Core.Core
     {
         public int AddProcessToBlock(long processSize, List<BlockDTO> blocks)
         {
-            var difference = blocks[0].UpdatedSize - processSize;
+            uint difference = (uint)(blocks[0].UpdatedSize - processSize);
             var order = 0;
 
             foreach (var block in blocks)
             {
-                if (block.UpdatedSize - processSize >= difference)
+                if ((block.UpdatedSize - processSize) > difference)
                 {
-                    difference = block.UpdatedSize - processSize;
+                    difference = (uint)(block.UpdatedSize - processSize);
                     order = block.Order;
                 }
             }

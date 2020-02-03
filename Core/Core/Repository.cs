@@ -34,13 +34,13 @@ namespace Core.Core
 
         }
 
-        public async Task<bool> AddProcessByAlgorithm(ProcessDTO processData, string algorithmType)
+        public async Task<bool> AddProcessByAlgorithm(ProcessDTO processData)
         {
             var result = false;
             var blocks = await _context.Blocks.Include(x => x.Processes).ToListAsync();
             var blocksDTO = _mapper.Map<List<BlockDTO>>(blocks);
 
-            var resultAlgorithms = _algorithmsDiccionary[algorithmType].AddProcessToBlock(processData.Size, blocksDTO);
+            var resultAlgorithms = _algorithmsDiccionary[processData.AlgorithmType].AddProcessToBlock(processData.Size, blocksDTO);
 
             if (resultAlgorithms.Equals(0))
             {

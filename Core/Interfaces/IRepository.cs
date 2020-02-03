@@ -9,7 +9,7 @@ namespace Core.Interfaces
     public interface IRepository
     {
         Task<List<BlockDTO>> GetAllMemoryBlocks();
-        Task<bool> AddProcessByAlgorithm(ProcessDTO processData, string algorithmType);
+        Task<bool> AddProcessByAlgorithm(ProcessDTO processData);
         Task<bool> FreeProcess(ProcessDTO processData);
     }
 }

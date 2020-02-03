@@ -9,6 +9,7 @@ using Core.Context;
 using Core.Entities;
 using Core.Interfaces;
 using Core.Models;
+using Core.Core;
 
 namespace MVC.Controllers
 {
@@ -23,6 +24,14 @@ namespace MVC.Controllers
 
         public IActionResult Index()
         {
+            List<SelectListItem> listAlgorithms = new List<SelectListItem>
+            {
+                new SelectListItem { Value = AlgorithmsType.FirstFit, Text = AlgorithmsType.FirstFit },
+                new SelectListItem { Value = AlgorithmsType.BestFit, Text = AlgorithmsType.BestFit },
+                new SelectListItem { Value = AlgorithmsType.WorstFit, Text = AlgorithmsType.WorstFit },
+                new SelectListItem { Value = AlgorithmsType.NextFit, Text = AlgorithmsType.NextFit }
+            };
+            ViewData["AlgorithmType"] = new SelectList(listAlgorithms, "Value", "Text");
             return View();
         }
 
@@ -34,9 +43,9 @@ namespace MVC.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddProcess(ProcessDTO process, string algorithm)
+        public async Task<IActionResult> AddProcess(ProcessDTO process)
         {
-            var result = await _repository.AddProcessByAlgorithm(process, algorithm);
+            var result = await _repository.AddProcessByAlgorithm(process);
 
             if (result)
             {
