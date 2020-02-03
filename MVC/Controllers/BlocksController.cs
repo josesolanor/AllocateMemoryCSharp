@@ -45,6 +45,12 @@ namespace MVC.Controllers
         [HttpPost]
         public async Task<IActionResult> AddProcess(ProcessDTO process)
         {
+            if (process.Size <= 0)
+            {
+                TempData["Msg"] = "Only positive number allowed";
+                return RedirectToAction("Index");
+            }
+
             var result = await _repository.AddProcessByAlgorithm(process);
 
             if (result)
